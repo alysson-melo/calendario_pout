@@ -1,5 +1,10 @@
 @charset "UTF-8";
 
+html {
+    font-size: 62.5%;
+    /* 1rem = 10px */
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -27,42 +32,41 @@
     --secondary-500: #C77DFF;
 
     --gradient-primary: linear-gradient(to bottom, #9D4EDD 0%, #7B2CBF 61%, #7B2CBF 100%);
-    --box_shadow_default: -3px 4px 4px rgba(0, 0, 0, 0.3);
+    --box_shadow_default: -0.3rem 0.4rem 0.4rem rgba(0, 0, 0, 0.3);
 }
 
 
 body {
     /* centralização dos objetos para teste */
     margin: 0;
-    min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     align-items: center;
     justify-content: center;
 
     background: var(--gradient-primary);
-    min-height: 100vh;
     color: var(--white);
 }
 
 .container {
     width: 100%;
     /* verificar o tamanho que isso deve ter no futuro para responsividade */
-    max-width: 600px;
+    max-width: 60rem;
     margin: 0 auto;
-    backdrop-filter: blur(20px);
-    border-radius: 25px;
-    padding: 20px;
+    backdrop-filter: blur(2rem);
+    border-radius: 2.5rem;
+    padding: 2rem;
     /* TIRA PARA VER O CONTAINER 
     background: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); */
+    box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.3); */
 }
 
 .calendar-section {
     background: var(--white);
-    border-radius: 15px;
-    padding: 30px;
-    margin-bottom: 33px;
-    box-shadow: var(--box_shadow_default)
+    border-radius: 1.5rem;
+    padding: 3rem;
+    margin-bottom: 3.3rem;
+    box-shadow: var(--box_shadow_default);
 }
 
 button {
@@ -87,7 +91,7 @@ button {
     color: var(--primary-600);
     cursor: pointer;
     transition: color 0.2s;
-    font-size: 23px;
+    font-size: 2.3rem;
     font-weight: bold;
 }
 
@@ -119,9 +123,9 @@ button {
 
 .year-modal {
     background: var(--white);
-    border-radius: 15px;
-    padding: 30px;
-    max-width: 400px;
+    border-radius: 1.5rem;
+    padding: 3rem;
+    max-width: 40rem;
     width: 90%;
     overflow-y: auto;
     box-shadow: var(--box_shadow_default);
@@ -135,38 +139,38 @@ button {
 
 .modal-header {
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 1rem;
 }
 
 .modal-title {
     color: var(--primary-600);
-    font-size: 20px;
+    font-size: 2rem;
     font-weight: bold;
 }
 
 .year-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-    margin-bottom: 25px;
-    max-height: 400px;
+    gap: 0.8rem;
+    margin-bottom: 2.5rem;
+    max-height: 40rem;
     overflow-y: auto;
-    padding: 10px;
-    border-radius: 12px;
+    padding: 1rem;
+    border-radius: 1.2rem;
 }
 
 .year-grid::-webkit-scrollbar {
-    width: 6px;
+    width: 0.6rem;
 }
 
 .year-grid::-webkit-scrollbar-track {
     background: var(--secondary-300);
-    border-radius: 3px;
+    border-radius: 0.3rem;
 }
 
 .year-grid::-webkit-scrollbar-thumb {
     background: var(--secondary-400);
-    border-radius: 3px;
+    border-radius: 0.3rem;
 }
 
 .year-grid::-webkit-scrollbar-thumb:hover {
@@ -174,14 +178,14 @@ button {
 }
 
 .year-item {
-    padding: 12px 8px;
+    padding: 1.2rem 0.8rem;
     text-align: center;
-    border-radius: 8px;
+    border-radius: 0.8rem;
     background: var(--background-things);
     color: var(--black);
     cursor: pointer;
     font-weight: 500;
-    font-size: 14px;
+    font-size: 1.4rem;
     transition: all 0.2s ease;
 }
 
@@ -200,14 +204,14 @@ button {
 
 .modal-actions {
     display: flex;
-    gap: 12px;
+    gap: 1.2rem;
     justify-content: flex-end;
 }
 
 .modal-btn {
-    padding: 10px 20px;
+    padding: 1rem 2rem;
     border: none;
-    border-radius: 8px;
+    border-radius: 0.8rem;
     cursor: pointer;
     font-weight: 600;
     transition: all 0.2s ease;
@@ -234,17 +238,17 @@ button {
 .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 4px;
-    margin-top: 5px;
+    gap: 0.4rem;
+    margin-top: 0.5rem;
 }
 
 .day-header {
     text-align: center;
     font-family: 'Pontano Sans', sans-serif;
-    font-size: 13px;
+    font-size: 1.3rem;
     font-weight: bold;
     color: var(--secondary-500);
-    padding: 12px 0;
+    padding: 1.2rem 0;
 }
 
 .day {
@@ -252,15 +256,15 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 5px;
+    border-radius: 0.5rem;
     cursor: pointer;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 1.6rem;
     transition: all 0.2s ease;
     position: relative;
     background: var(--background-things);
     color: var(--primary-600);
-    margin: 2px;
+    margin: 0.2rem;
 }
 
 .day.today,
