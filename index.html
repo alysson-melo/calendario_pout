@@ -18,14 +18,15 @@
 
         <!-- Calendar -->
         <div class="calendar-section">
-            <div class="calendar-header">
-                <div class="calendar-title">Escalas</div>
-            </div>
 
             <div class="month-year">
-                <button class="nav-btn" onclick="changeMonth(-1)">‹</button>
+                <button onclick="changeMonth(-1)">
+                    <img id="nav-btn-left" src="icons/chevron-up-solid-full.svg" alt="backward month">
+                </button>
                 <h2 id="monthYear" onclick="openYearModal()">Agosto de 2025</h2>
-                <button class="nav-btn" onclick="changeMonth(1)">›</button>
+                <button onclick="changeMonth(1)">
+                    <img src="icons/chevron-up-solid-full.svg" alt="backward month">
+                </button>
             </div>
 
             <div class="calendar-grid" id="calendar">

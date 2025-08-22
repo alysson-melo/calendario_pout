@@ -4,120 +4,68 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
+/*---------------------------------------
+  CUSTOM PROPERTIES ( VARIABLES )             
+-----------------------------------------*/
+
+:root {
+    --white: #FFFFFF;
+    --black: #000000;
+
+    --background-things: #E5E5E5;
+
+    --primary-400: #9D4EDD;
+    --primary-500: #7B2CBF;
+    --primary-600: #5A189A;
+    --primary-700: #3C096C;
+
+    --secondary-300: #F1DFFF;
+    --secondary-400: #E6BDFE;
+    --secondary-500: #C77DFF;
+
+    --gradient-primary: linear-gradient(to bottom, #9D4EDD 0%, #7B2CBF 61%, #7B2CBF 100%);
+    --box_shadow_default: -3px 4px 4px rgba(0, 0, 0, 0.3);
+}
+
+
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: linear-gradient(135deg, #6B46C1 0%, #8B5CF6 100%);
+    background: var(--gradient-primary);
     min-height: 100vh;
     padding: 20px;
-    color: white;
+    color: var(--white);
 }
 
 .container {
     max-width: 400px;
     margin: 0 auto;
-    background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(20px);
     border-radius: 25px;
     padding: 20px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-}
-
-.header {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 30px;
-    background: rgba(255, 255, 255, 0.15);
-    padding: 15px;
-    border-radius: 15px;
-}
-
-.team-photos {
-    display: flex;
-    gap: -10px;
-}
-
-.photo {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: linear-gradient(45deg, #FF6B6B, #4ECDC4, #45B7D1, #96CEB4, #FECA57);
-    border: 2px solid white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 14px;
-    margin-left: -10px;
-}
-
-.photo:first-child {
-    margin-left: 0;
-}
-
-.logo-section {
-    flex: 1;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: bold;
-    font-size: 16px;
-}
-
-.logo::before {
-    content: '🎯';
-    font-size: 20px;
-}
-
-.subtitle {
-    font-size: 12px;
-    opacity: 0.8;
-    margin-top: 2px;
+    /* TIRA PARA VER O CONTAINER */
+    /* background: rgba(255, 255, 255, 0.1); */
+    /* box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); */
 }
 
 .calendar-section {
-    background: #FFFFFF;
-    border-radius: 25px;
+    background: var(--white);
+    border-radius: 15px;
     padding: 30px;
     color: #333;
-    margin-bottom: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    margin-bottom: 33px;
+    box-shadow: var(--box_shadow_default)
 }
 
-.calendar-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 30px;
-}
-
-.calendar-title {
-    font-size: 24px;
-    font-weight: bold;
-    color: #5A189A;
-    text-align: center;
-    flex: 1;
-}
-
-.nav-btn {
+button {
     background: none;
     border: none;
-    font-size: 24px;
     cursor: pointer;
-    padding: 8px;
-    color: #5A189A;
-    border-radius: 8px;
-    transition: background-color 0.2s;
-    font-weight: bold;
 }
 
-.nav-btn:hover {
-    background-color: #E9C3FF;
+#nav-btn-left {
+    transform: rotate(180deg);
 }
 
 .month-year {
@@ -128,13 +76,18 @@ body {
 }
 
 .month-year h2 {
+    color: var(--primary-600);
     cursor: pointer;
     transition: color 0.2s;
 }
 
 .month-year h2:hover {
-    color: #C77DFF;
+    color: var(--primary-400);
 }
+
+
+/* PAREI AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII */
+
 
 /* Year Selection Modal */
 .modal-overlay {
@@ -285,14 +238,18 @@ body {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 4px;
-    margin-top: 20px;
+    margin-top: 5px;
 }
+
+
+/* (day-header) ARRUMEI A COR DO DIAS DA SEMANAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA */
+
 
 .day-header {
     text-align: center;
-    font-size: 14px;
-    font-weight: 600;
-    color: #5A189A;
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--secondary-500);
     padding: 12px 0;
 }
 
@@ -301,42 +258,36 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 8px;
+    border-radius: 5px;
     cursor: pointer;
     font-weight: 600;
     font-size: 16px;
     transition: all 0.2s ease;
     position: relative;
-    background: #D9D9D9;
-    color: #333;
+    background: var(--background-things);
+    color: var(--primary-600);
     margin: 2px;
 }
 
 .day:hover {
-    background-color: #E9C3FF;
-    transform: scale(1.05);
+    background-color: var(--secondary-400);
 }
 
 .day.today {
-    background: #C77DFF;
-    color: #5A189A;
-    font-weight: 700;
+    background: var(--secondary-400);
 }
 
 .day.selected {
-    background: #5A189A;
-    color: #FFFFFF;
-    font-weight: 700;
+    background: var(--secondary-400);
 }
 
 .day.has-event {
-    background: #5A189A;
+    background: var(--primary-600);
     color: #FFFFFF;
-    font-weight: 700;
 }
 
 .day.has-event:hover {
-    background: #4a0e7a;
+    background: var(--primary-400);
 }
 
 .day.empty {
