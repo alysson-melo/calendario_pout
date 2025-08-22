@@ -4,7 +4,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
 }
 
 /*---------------------------------------
@@ -39,21 +39,21 @@ body {
 }
 
 .container {
+    /* verificar o tamanho que isso deve ter no futuro para responsividade */
     max-width: 400px;
     margin: 0 auto;
     backdrop-filter: blur(20px);
     border-radius: 25px;
     padding: 20px;
-    /* TIRA PARA VER O CONTAINER */
-    /* background: rgba(255, 255, 255, 0.1); */
-    /* box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); */
+    /* TIRA PARA VER O CONTAINER 
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); */
 }
 
 .calendar-section {
     background: var(--white);
     border-radius: 15px;
     padding: 30px;
-    color: #333;
     margin-bottom: 33px;
     box-shadow: var(--box_shadow_default)
 }
@@ -79,6 +79,8 @@ button {
     color: var(--primary-600);
     cursor: pointer;
     transition: color 0.2s;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .month-year h2:hover {
@@ -247,6 +249,7 @@ button {
 
 .day-header {
     text-align: center;
+    font-family: 'Pontano Sans', sans-serif;
     font-size: 13px;
     font-weight: bold;
     color: var(--secondary-500);
@@ -260,7 +263,7 @@ button {
     justify-content: center;
     border-radius: 5px;
     cursor: pointer;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 16px;
     transition: all 0.2s ease;
     position: relative;
@@ -269,15 +272,9 @@ button {
     margin: 2px;
 }
 
+.day.today,
+.day.selected,
 .day:hover {
-    background-color: var(--secondary-400);
-}
-
-.day.today {
-    background: var(--secondary-400);
-}
-
-.day.selected {
     background: var(--secondary-400);
 }
 
