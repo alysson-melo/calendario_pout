@@ -1,8 +1,6 @@
-// Configurações iniciais
 const maxYear = new Date().getFullYear() - 80;
 const minYear = new Date().getFullYear() - 15;
-
-let currentDate = new Date(minYear, 0, 1); // Janeiro do minYear
+let currentDate = new Date(minYear, 0, 1);
 let selectedDate = null;
 let selectedYear = null;
 
@@ -137,11 +135,11 @@ function confirmYearSelection() {
 generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
 
 // Fechar modal clicando fora
-document.getElementById('yearModal').addEventListener('click', function (e) {
-    if (e.target === this) closeYearModal();
+document.getElementById('yearModal').addEventListener('click', function (modalOverlay) {
+    if (modalOverlay.target === this) closeYearModal();
 });
 
 // Fechar modal com Escape
-document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') closeYearModal();
+document.addEventListener('keydown', function (keydownEvent) {
+    if (keydownEvent.key === 'Escape') closeYearModal();
 });
