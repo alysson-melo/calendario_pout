@@ -52,7 +52,7 @@ function generateCalendar(year, month) {
             dayElement.classList.add('today');
         }
 
-        if (selectedDate === dateStr) {
+        if (selectedDate && selectedDate === dateStr) {
             dayElement.classList.add('selected');
         }
 
