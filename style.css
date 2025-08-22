@@ -47,7 +47,7 @@ body {
 .container {
     width: 100%;
     /* verificar o tamanho que isso deve ter no futuro para responsividade */
-    max-width: 700px;
+    max-width: 600px;
     margin: 0 auto;
     backdrop-filter: blur(20px);
     border-radius: 25px;
@@ -69,6 +69,7 @@ button {
     background: none;
     border: none;
     cursor: pointer;
+    user-select: none;
 }
 
 #nav-btn-left {
@@ -120,7 +121,7 @@ button {
     background: var(--white);
     border-radius: 15px;
     padding: 30px;
-    max-width: 600px;
+    max-width: 400px;
     width: 90%;
     overflow-y: auto;
     box-shadow: var(--box_shadow_default);
