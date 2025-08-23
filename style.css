@@ -51,7 +51,7 @@ body {
 .container {
     width: 100%;
     /* verificar o tamanho que isso deve ter no futuro para responsividade */
-    max-width: 70rem;
+    max-width: 60rem;
     margin: 0 auto;
     backdrop-filter: blur(2rem);
     border-radius: 2.5rem;
@@ -73,6 +73,7 @@ button {
     background: none;
     border: none;
     cursor: pointer;
+    user-select: none;
 }
 
 #nav-btn-left {
@@ -124,7 +125,7 @@ button {
     background: var(--white);
     border-radius: 1.5rem;
     padding: 3rem;
-    max-width: 60rem;
+    max-width: 40rem;
     width: 90%;
     overflow-y: auto;
     box-shadow: var(--box_shadow_default);
@@ -151,7 +152,7 @@ button {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 0.8rem;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.8rem;
     max-height: 40rem;
     overflow-y: auto;
     padding: 1rem;
@@ -267,7 +268,6 @@ button {
 }
 
 .day.today,
-.day.selected,
 .day:hover {
     background: var(--secondary-400);
 }
@@ -279,6 +279,16 @@ button {
 
 .day.has-event:hover {
     background: var(--primary-400);
+}
+
+/* PRIORIDADE: Selected sempre sobrepõe has-event */
+.day.selected {
+    background: var(--secondary-400) !important;
+    color: var(--primary-600);
+}
+
+.day.selected:hover {
+    background: var(--secondary-300) !important;
 }
 
 .day.empty {
@@ -298,6 +308,33 @@ button {
     padding: 2rem;
     margin-bottom: 2.5rem;
     border: 0.1rem solid rgba(255, 255, 255, 0.2);
+}
+
+.day.other-month {
+    opacity: 0.4;
+    color: var(--primary-400);
+    background: rgba(229, 229, 229, 0.5);
+}
+
+.day.other-month:hover {
+    opacity: 0.7;
+    background: rgba(157, 78, 221, 0.3);
+}
+
+.day.other-month.has-event {
+    background: rgba(90, 24, 154, 0.6);
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.day.other-month.has-event:hover {
+    background: rgba(90, 24, 154, 0.8);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Selected para dias de outros meses também tem prioridade */
+.day.other-month.selected {
+    background: var(--secondary-400) !important;
+    opacity: 0.7;
 }
 
 .event-date {

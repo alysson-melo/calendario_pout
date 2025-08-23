@@ -1,6 +1,7 @@
 let currentDate = new Date();
 let selectedDate = null;
 let selectedYear = null;
+let isFirstInit = true;
 
 // Eventos de exemplo - agora incluindo as datas que aparecem roxas na imagem
 const events = {
@@ -63,53 +64,134 @@ function generateCalendar(year, month) {
     const startingDayOfWeek = firstDay.getDay();
     const daysInMonth = lastDay.getDate();
 
-    // Add empty cells for days before the first day of the month
-    for (let i = 0; i < startingDayOfWeek; i++) {
-        const emptyDay = document.createElement('div');
-        emptyDay.classList.add('day', 'empty');
-        calendar.appendChild(emptyDay);
-    }
+    // Calcular dias do mês anterior
+    const prevMonth = month === 0 ? 11 : month - 1;
+    const prevYear = month === 0 ? year - 1 : year;
+    const daysInPrevMonth = new Date(prevYear, prevMonth + 1, 0).getDate();
 
-    const todayStr = new Date().toISOString().slice(0, 10);
+    // Calcular dias do próximo mês
+    const nextMonth = month === 11 ? 0 : month + 1;
+    const nextYear = month === 11 ? year + 1 : year;
 
-    for (let day = 1; day <= daysInMonth; day++) {
+    // Total de células necessárias (6 semanas × 7 dias)
+    const totalCells = 42;
+    let dayCounter = 1;
+    let nextMonthDay = 1;
+
+    for (let i = 0; i < totalCells; i++) {
         const dayElement = document.createElement('div');
         dayElement.classList.add('day');
-        dayElement.textContent = day;
 
-        const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        let dayNumber;
+        let dateStr;
+        let isCurrentMonth = true;
 
-        // Check if it's today (day 7)
-        if (todayStr === dateStr) {
-            dayElement.classList.add('today');
+        if (i < startingDayOfWeek) {
+            // Dias do mês anterior
+            dayNumber = daysInPrevMonth - (startingDayOfWeek - 1 - i);
+            dateStr = `${prevYear}-${String(prevMonth + 1).padStart(2, '0')}-${String(dayNumber).padStart(2, '0')}`;
+            isCurrentMonth = false;
+            dayElement.classList.add('other-month');
+        } else if (dayCounter <= daysInMonth) {
+            // Dias do mês atual
+            dayNumber = dayCounter;
+            dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(dayNumber).padStart(2, '0')}`;
+            dayCounter++;
+        } else {
+            // Dias do próximo mês
+            dayNumber = nextMonthDay;
+            dateStr = `${nextYear}-${String(nextMonth + 1).padStart(2, '0')}-${String(dayNumber).padStart(2, '0')}`;
+            nextMonthDay++;
+            isCurrentMonth = false;
+            dayElement.classList.add('other-month');
         }
 
-        // Check if it's selected
-        if (selectedDate && selectedDate === dateStr) {
-            dayElement.classList.add('selected');
+        dayElement.textContent = dayNumber;
+        dayElement.dataset.date = dateStr;
+        dayElement.dataset.isCurrentMonth = isCurrentMonth;
+
+        // Adiciona evento de clique apenas para dias do mês atual
+        if (isCurrentMonth) {
+            dayElement.addEventListener('click', () => selectDate(dateStr, dayNumber));
+        } else {
+            // Para dias de outros meses, navega para esse mês ao clicar
+            dayElement.addEventListener('click', () => {
+                if (i < startingDayOfWeek) {
+                    // Clicou em dia do mês anterior
+                    changeMonth(-1);
+                    setTimeout(() => {
+                        selectDate(dateStr, dayNumber);
+                    }, 50);
+                } else {
+                    // Clicou em dia do próximo mês
+                    changeMonth(1);
+                    setTimeout(() => {
+                        selectDate(dateStr, dayNumber);
+                    }, 50);
+                }
+            });
         }
 
-        // Check if there's an event (days with events get purple background)
-        if (events[dateStr]) {
-            dayElement.classList.add('has-event');
-        }
-
-        dayElement.addEventListener('click', () => selectDate(dateStr, day));
         calendar.appendChild(dayElement);
     }
+
+    // Atualiza classes de dias
+    updateAllDayClasses();
+
+    // Seleciona o dia atual automaticamente
+    const today = new Date();
+    if (isFirstInit && year === today.getFullYear() && month === today.getMonth()) {
+        selectedDate = today.toISOString().slice(0, 10);
+        selectDate(selectedDate, today.getDate());
+        isFirstInit = false;
+    }
+}
+
+function updateAllDayClasses() {
+    const todayStr = new Date().toISOString().slice(0, 10);
+    const dayElements = document.querySelectorAll('.day[data-date]');
+
+    dayElements.forEach(dayElement => {
+        const dateStr = dayElement.dataset.date;
+        const isCurrentMonth = dayElement.dataset.isCurrentMonth === 'true';
+
+        // Limpa classes dinâmicas (mantém other-month se aplicável)
+        dayElement.classList.remove('today', 'selected', 'has-event');
+
+        // Aplica condições apenas para dias do mês atual
+        if (isCurrentMonth) {
+            if (todayStr === dateStr) {
+                dayElement.classList.add('today');
+                dayElement.classList.add('selected');
+            }
+
+            if (selectedDate && selectedDate === dateStr) dayElement.classList.add('selected');
+            if (events[dateStr]) dayElement.classList.add('has-event');
+
+        } else {
+            // Para dias de outros meses, apenas verifica se tem eventos
+            if (events[dateStr]) dayElement.classList.add('has-event');
+        }
+    });
 }
 
 function selectDate(dateStr, day) {
     selectedDate = dateStr;
-    generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
 
+    // Atualiza classes e detalhes do evento
+    updateAllDayClasses();
+    updateEventDetails(dateStr, day);
+}
+
+function updateEventDetails(dateStr, day) {
     const event = events[dateStr];
     const eventDetails = document.getElementById('eventDetails');
 
+    // Preenche detalhes do evento ou mostra informações padrão
+    document.getElementById('eventDay').textContent = day;
+    document.getElementById('eventMonth').textContent = currentDate.toLocaleDateString('pt-BR', { month: 'short' }).toUpperCase().slice(0, 3);
+
     if (event) {
-        eventDetails.classList.remove('hidden');
-        document.getElementById('eventDay').textContent = day;
-        document.getElementById('eventMonth').textContent = currentDate.toLocaleDateString('pt-BR', { month: 'short' }).toUpperCase();
         document.getElementById('eventTitle').textContent = event.title;
         document.getElementById('eventSubtitle').textContent = event.subtitle;
 
@@ -117,25 +199,22 @@ function selectDate(dateStr, day) {
         actionBtns[0].textContent = `👍 ${event.likes}`;
         actionBtns[1].textContent = `📝 ${event.comments}`;
     } else {
-        // Show default event info for dates without events
-        document.getElementById('eventDay').textContent = day;
-        document.getElementById('eventMonth').textContent = currentDate.toLocaleDateString('pt-BR', { month: 'short' }).toUpperCase();
         document.getElementById('eventTitle').textContent = 'Sem eventos';
-        document.getElementById('eventSubtitle').textContent = 'Nenhum evento agendado';
+        document.getElementById('eventSubtitle').textContent = '-';
 
         const actionBtns = eventDetails.querySelectorAll('.action-btn');
-        actionBtns[0].textContent = '👍 0/0';
-        actionBtns[1].textContent = '📝 0';
+        actionBtns[0].textContent = '👍 -';
+        actionBtns[1].textContent = '📝 -';
     }
 }
 
 function changeMonth(direction) {
     currentDate.setMonth(currentDate.getMonth() + direction);
-    selectedDate = null; // Clear selection when changing months
-    generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
 
-    // Hide event details when changing months
-    document.getElementById('eventDetails').classList.add('hidden');
+    // Limpa a seleção visual ao navegar entre meses
+    selectedDate = null;
+
+    generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
 }
 
 function openYearModal() {
@@ -151,17 +230,36 @@ function closeYearModal() {
 
 function generateYearGrid() {
     const yearGrid = document.getElementById('yearGrid');
-    const currentYear = new Date().getFullYear();
-    const startYear = 1940;
-    const endYear = 2035;
+    const startYear = new Date().getFullYear() - 5;
+    const endYear = new Date().getFullYear() + 6;
 
     yearGrid.innerHTML = '';
 
-    // Generate all years from 1940 to 2035
-    for (let year = endYear; year >= startYear; year--) { // Reverse order (newest first)
+    for (let year = endYear; year >= startYear; year--) {
         const yearElement = document.createElement('div');
         yearElement.classList.add('year-item');
         yearElement.textContent = year;
+        yearElement.dataset.year = year;
+
+        yearElement.addEventListener('click', () => selectYear(year));
+        yearGrid.appendChild(yearElement);
+    }
+    updateAllYearClasses();
+}
+
+function selectYear(year) {
+    selectedYear = year;
+    updateAllYearClasses();
+}
+
+function updateAllYearClasses() {
+    const currentYear = new Date().getFullYear();
+    const yearElements = document.querySelectorAll('.year-item[data-year]');
+
+    yearElements.forEach(yearElement => {
+        const year = parseInt(yearElement.dataset.year);
+
+        yearElement.classList.remove('current', 'selected');
 
         if (year === currentYear) {
             yearElement.classList.add('current');
@@ -170,55 +268,21 @@ function generateYearGrid() {
         if (year === selectedYear) {
             yearElement.classList.add('selected');
         }
-
-        yearElement.addEventListener('click', () => selectYear(year));
-        yearGrid.appendChild(yearElement);
-    }
-
-    // Auto-scroll to selected year or current year
-    setTimeout(() => {
-        const targetElement = document.querySelector('.year-item.selected') ||
-            document.querySelector('.year-item.current');
-        if (targetElement) {
-            targetElement.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center'
-            });
-        }
-    }, 100);
-}
-
-function selectYear(year) {
-    selectedYear = year;
-
-    // Update visual selection
-    document.querySelectorAll('.year-item').forEach(item => {
-        item.classList.remove('selected');
-        if (parseInt(item.textContent) === year) {
-            item.classList.add('selected');
-        }
     });
 }
 
 function confirmYearSelection() {
     if (selectedYear !== null) {
         currentDate.setFullYear(selectedYear);
-        selectedDate = null; // Clear selection when changing year
-        generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+        selectedDate = null;
 
-        // Hide event details when changing year
-        document.getElementById('eventDetails').classList.add('hidden');
+        generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
     }
     closeYearModal();
 }
 
 // Initialize calendar
 generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
-
-// Set default selection to day 16
-setTimeout(() => {
-    selectDate('2025-08-16', 16);
-}, 100);
 
 // Navigation items
 document.querySelectorAll('.nav-item').forEach(item => {
