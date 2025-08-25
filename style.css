@@ -301,15 +301,6 @@ button {
     background: transparent;
 }
 
-.event-details {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(2rem);
-    border-radius: 1.8rem;
-    padding: 2rem;
-    margin-bottom: 2.5rem;
-    border: 0.1rem solid rgba(255, 255, 255, 0.2);
-}
-
 .day.other-month {
     opacity: 0.4;
     color: var(--primary-400);
@@ -337,98 +328,44 @@ button {
     opacity: 0.7;
 }
 
-.event-date {
+.event-details {
+    display: flex;
+}
+
+/* .event-date {
     display: flex;
     align-items: center;
     gap: 1.5rem;
     margin-bottom: 1.5rem;
-}
+} */
 
-.date-box {
+/* .date-box {
     background: rgba(255, 255, 255, 0.2);
     border-radius: 1.2rem;
     padding: 1.2rem;
     text-align: center;
     min-width: 6rem;
-}
+} */
 
-.date-day {
+/* .date-day {
     font-size: 2.4rem;
     font-weight: bold;
     line-height: 1;
-}
+} */
 
-.date-month {
+/* .date-month {
     font-size: 1.2rem;
     opacity: 0.9;
     text-transform: uppercase;
-}
+} */
 
-.event-info h3 {
+/* .event-info h3 {
     font-size: 1.8rem;
     margin-bottom: 0.5rem;
     font-weight: 600;
-}
+} */
 
-.event-subtitle {
+/* .event-subtitle {
     opacity: 0.8;
     font-size: 1.4rem;
-}
-
-.event-actions {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1.5rem;
-}
-
-.action-btn {
-    background: rgba(255, 255, 255, 0.2);
-    border: none;
-    border-radius: 0.8rem;
-    padding: 0.8rem 1.2rem;
-    color: white;
-    cursor: pointer;
-    font-size: 1.2rem;
-    transition: background-color 0.2s;
-}
-
-.action-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
-}
-
-.bottom-nav {
-    display: flex;
-    justify-content: space-around;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(2rem);
-    border-radius: 1.8rem;
-    padding: 1.5rem;
-    border: 0.1rem solid rgba(255, 255, 255, 0.2);
-}
-
-.nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    cursor: pointer;
-    padding: 0.8rem;
-    border-radius: 1.2rem;
-    transition: background-color 0.2s;
-    font-size: 1.2rem;
-    color: rgba(255, 255, 255, 0.8);
-}
-
-.nav-item:hover,
-.nav-item.active {
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-}
-
-.nav-icon {
-    font-size: 2rem;
-}
-
-.hidden {
-    display: none;
-}
+} */
