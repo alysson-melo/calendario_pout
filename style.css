@@ -369,3 +369,36 @@ button {
     opacity: 0.8;
     font-size: 1.4rem;
 } */
+
+.event-details {
+    background-color: var(--white);
+    border-radius: 15px;
+}
+
+.event-date {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary-600);
+    border-radius: 15px 0 0 15px;
+    width: 4.4375rem;
+    padding-inline: 12%;
+}
+
+.date-day,
+.date-month {
+    color: var(--white);
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 800;
+    line-height: 100.028%;
+}
+
+.date-week,
+.date-hour {
+    color: var(--white);
+    font-family: "Pontano Sans";
+    font-size: 1rem;
+    font-weight: 700;
+}

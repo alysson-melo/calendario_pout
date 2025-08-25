@@ -3,7 +3,6 @@ let selectedDate = null;
 let selectedYear = null;
 let isFirstInit = true;
 
-// Eventos de exemplo - agora incluindo as datas que aparecem roxas na imagem
 const events = {
     '2025-08-03': {
         title: 'Ensaio',
