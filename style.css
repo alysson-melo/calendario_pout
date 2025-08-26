@@ -12,21 +12,24 @@
 -----------------------------------------*/
 
 :root {
-    --white: #FFFFFF;
+    --white: #ffffff;
     --black: #000000;
 
-    --background-things: #E5E5E5;
+    --background-things: #e5e5e5;
 
-    --primary-400: #9D4EDD;
-    --primary-500: #7B2CBF;
-    --primary-600: #5A189A;
-    --primary-700: #3C096C;
+    --primary-400: #9d4edd;
+    --primary-500: #7b2cbf;
+    --primary-600: #5a189a;
+    --primary-700: #3c096c;
 
-    --secondary-300: #F1DFFF;
-    --secondary-400: #E6BDFE;
-    --secondary-500: #C77DFF;
+    --secondary-300: #f1dfff;
+    --secondary-400: #e6bdfe;
+    --secondary-500: #c77dff;
 
-    --gradient-primary: linear-gradient(to bottom, #9D4EDD 0%, #7B2CBF 61%, #7B2CBF 100%);
+    --gradient-primary: linear-gradient(to bottom,
+            #9d4edd 0%,
+            #7b2cbf 61%,
+            #7b2cbf 100%);
     --box_shadow_default: -0.3rem 0.4rem 0.4rem rgba(0, 0, 0, 0.3);
 }
 
@@ -66,7 +69,7 @@ body {
     border-radius: 1.5rem;
     padding: 3rem;
     margin-bottom: 3.3rem;
-    box-shadow: var(--box_shadow_default)
+    box-shadow: var(--box_shadow_default);
 }
 
 button {
@@ -244,7 +247,7 @@ button {
 
 .day-header {
     text-align: center;
-    font-family: 'Pontano Sans', sans-serif;
+    font-family: "Pontano Sans", sans-serif;
     font-size: 1.3rem;
     font-weight: bold;
     color: var(--secondary-500);
@@ -274,7 +277,7 @@ button {
 
 .day.has-event {
     background: var(--primary-600);
-    color: #FFFFFF;
+    color: #ffffff;
 }
 
 .day.has-event:hover {
@@ -373,6 +376,9 @@ button {
 .event-details {
     background-color: var(--white);
     border-radius: 15px;
+    width: 100%;
+    display: flex;
+    flex: 1;
 }
 
 .event-date {
@@ -382,15 +388,16 @@ button {
     align-items: center;
     background-color: var(--primary-600);
     border-radius: 15px 0 0 15px;
-    width: 4.4375rem;
-    padding-inline: 12%;
+    width: 7rem;
+    padding-inline: 11%;
+    gap: 0.2rem;
 }
 
 .date-day,
 .date-month {
     color: var(--white);
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     font-weight: 800;
     line-height: 100.028%;
 }
@@ -401,4 +408,56 @@ button {
     font-family: "Pontano Sans";
     font-size: 1rem;
     font-weight: 700;
+}
+
+.event-description {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    /* Adicionar isso */
+    padding: 1.2rem;
+    /* Adicionar isso para dar espaçamento interno */
+    gap: 0.5rem;
+}
+
+.event-title {
+    color: var(--primary-600);
+    text-align: center;
+    font-family: Poppins;
+    font-size: 1.8rem;
+    font-weight: 800;
+}
+
+.event-subtitle {
+    color: var(--black);
+    font-family: "Pontano Sans";
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.event-icons {
+    display: flex;
+    gap: 1.3rem;
+}
+
+.event-presence,
+.event-songs {
+    display: flex;
+    gap: 0.4rem;
+}
+
+.presence-icon {
+    width: 1.6rem;
+}
+
+.song-icon {
+    width: 1.8rem;
+}
+
+.presence-info,
+.song-number {
+    color: var(--primary-600);
+    font-weight: 600;
+    font-size: 1.3rem;
 }

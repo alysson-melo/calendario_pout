@@ -1,59 +1,74 @@
-let currentDate = new Date();
+let today = new Date();
 let selectedDate = null;
 let selectedYear = null;
 let isFirstInit = true;
 
 const events = {
-    '2025-08-03': {
-        title: 'Ensaio',
-        subtitle: 'Preparação',
-        likes: '5/0',
-        comments: '2'
+    "2025-08-03": {
+        title: "Ensaio",
+        description: "Ensaio para o louvorzão",
+        hour: "19h30",
+        presence: "6/8",
+        numberOfSongs: "4",
     },
-    '2025-08-16': {
-        title: 'Louvor&ão',
-        subtitle: 'Culto e uma semana',
-        likes: '6/1',
-        comments: '4'
+    "2025-08-16": {
+        title: "Louvor&ão",
+        hour: "19h",
+        description: "",
+        presence: "5/9",
+        numberOfSongs: "10",
     },
-    '2025-08-17': {
-        title: 'Domingo',
-        subtitle: 'Culto principal',
-        likes: '8/0',
-        comments: '3'
+    "2025-08-17": {
+        title: "Domingo",
+        description: "Banda chegar as 17h para ensaio",
+        hour: "19h",
+        presence: "8/10",
+        numberOfSongs: "7",
     },
-    '2025-08-27': {
-        title: 'Ensaio Especial',
-        subtitle: 'Preparação',
-        likes: '4/0',
-        comments: '1'
+    "2025-08-27": {
+        title: "Ensaio Especial",
+        description: "",
+        hour: "20h",
+        presence: "6/8",
+        numberOfSongs: "4",
     },
-    '2025-08-28': {
-        title: 'Culto Jovem',
-        subtitle: 'Ministração jovem',
-        likes: '12/1',
-        comments: '7'
-    }
+    "2025-08-28": {
+        title: "Vigília",
+        description: "Chegar as 21h para organizar o local",
+        hour: "22h30",
+        presence: "4/8",
+        numberOfSongs: "8",
+    },
 };
 
 function generateCalendar(year, month) {
-    const calendar = document.getElementById('calendar');
-    const monthYear = document.getElementById('monthYear');
+    const calendar = document.getElementById("calendar");
+    const monthYear = document.getElementById("monthYear");
 
     const months = [
-        'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
-        'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+        "Janeiro",
+        "Fevereiro",
+        "Março",
+        "Abril",
+        "Maio",
+        "Junho",
+        "Julho",
+        "Agosto",
+        "Setembro",
+        "Outubro",
+        "Novembro",
+        "Dezembro",
     ];
 
-    const daysOfWeek = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'];
+    const daysOfWeek = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"];
 
     monthYear.textContent = `${months[month]} de ${year}`;
-    calendar.innerHTML = '';
+    calendar.innerHTML = "";
 
     // Add day headers
-    daysOfWeek.forEach(day => {
-        const dayHeader = document.createElement('div');
-        dayHeader.classList.add('day-header');
+    daysOfWeek.forEach((day) => {
+        const dayHeader = document.createElement("div");
+        dayHeader.classList.add("day-header");
         dayHeader.textContent = day;
         calendar.appendChild(dayHeader);
     });
@@ -78,8 +93,8 @@ function generateCalendar(year, month) {
     let nextMonthDay = 1;
 
     for (let i = 0; i < totalCells; i++) {
-        const dayElement = document.createElement('div');
-        dayElement.classList.add('day');
+        const dayElement = document.createElement("div");
+        dayElement.classList.add("day");
 
         let dayNumber;
         let dateStr;
@@ -88,21 +103,27 @@ function generateCalendar(year, month) {
         if (i < startingDayOfWeek) {
             // Dias do mês anterior
             dayNumber = daysInPrevMonth - (startingDayOfWeek - 1 - i);
-            dateStr = `${prevYear}-${String(prevMonth + 1).padStart(2, '0')}-${String(dayNumber).padStart(2, '0')}`;
+            dateStr = `${prevYear}-${String(prevMonth + 1).padStart(2, "0")}-${String(
+                dayNumber
+            ).padStart(2, "0")}`;
             isCurrentMonth = false;
-            dayElement.classList.add('other-month');
+            dayElement.classList.add("other-month");
         } else if (dayCounter <= daysInMonth) {
             // Dias do mês atual
             dayNumber = dayCounter;
-            dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(dayNumber).padStart(2, '0')}`;
+            dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(
+                dayNumber
+            ).padStart(2, "0")}`;
             dayCounter++;
         } else {
             // Dias do próximo mês
             dayNumber = nextMonthDay;
-            dateStr = `${nextYear}-${String(nextMonth + 1).padStart(2, '0')}-${String(dayNumber).padStart(2, '0')}`;
+            dateStr = `${nextYear}-${String(nextMonth + 1).padStart(2, "0")}-${String(
+                dayNumber
+            ).padStart(2, "0")}`;
             nextMonthDay++;
             isCurrentMonth = false;
-            dayElement.classList.add('other-month');
+            dayElement.classList.add("other-month");
         }
 
         dayElement.textContent = dayNumber;
@@ -111,10 +132,12 @@ function generateCalendar(year, month) {
 
         // Adiciona evento de clique apenas para dias do mês atual
         if (isCurrentMonth) {
-            dayElement.addEventListener('click', () => selectDate(dateStr, dayNumber));
+            dayElement.addEventListener("click", () =>
+                selectDate(dateStr, dayNumber)
+            );
         } else {
             // Para dias de outros meses, navega para esse mês ao clicar
-            dayElement.addEventListener('click', () => {
+            dayElement.addEventListener("click", () => {
                 if (i < startingDayOfWeek) {
                     // Clicou em dia do mês anterior
                     changeMonth(-1);
@@ -138,8 +161,11 @@ function generateCalendar(year, month) {
     updateAllDayClasses();
 
     // Seleciona o dia atual automaticamente
-    const today = new Date();
-    if (isFirstInit && year === today.getFullYear() && month === today.getMonth()) {
+    if (
+        isFirstInit &&
+        year === today.getFullYear() &&
+        month === today.getMonth()
+    ) {
         selectedDate = today.toISOString().slice(0, 10);
         selectDate(selectedDate, today.getDate());
         isFirstInit = false;
@@ -148,28 +174,28 @@ function generateCalendar(year, month) {
 
 function updateAllDayClasses() {
     const todayStr = new Date().toISOString().slice(0, 10);
-    const dayElements = document.querySelectorAll('.day[data-date]');
+    const dayElements = document.querySelectorAll(".day[data-date]");
 
-    dayElements.forEach(dayElement => {
+    dayElements.forEach((dayElement) => {
         const dateStr = dayElement.dataset.date;
-        const isCurrentMonth = dayElement.dataset.isCurrentMonth === 'true';
+        const isCurrentMonth = dayElement.dataset.isCurrentMonth === "true";
 
         // Limpa classes dinâmicas (mantém other-month se aplicável)
-        dayElement.classList.remove('today', 'selected', 'has-event');
+        dayElement.classList.remove("today", "selected", "has-event");
 
         // Aplica condições apenas para dias do mês atual
         if (isCurrentMonth) {
             if (todayStr === dateStr) {
-                dayElement.classList.add('today');
-                dayElement.classList.add('selected');
+                dayElement.classList.add("today");
+                dayElement.classList.add("selected");
             }
 
-            if (selectedDate && selectedDate === dateStr) dayElement.classList.add('selected');
-            if (events[dateStr]) dayElement.classList.add('has-event');
-
+            if (selectedDate && selectedDate === dateStr)
+                dayElement.classList.add("selected");
+            if (events[dateStr]) dayElement.classList.add("has-event");
         } else {
             // Para dias de outros meses, apenas verifica se tem eventos
-            if (events[dateStr]) dayElement.classList.add('has-event');
+            if (events[dateStr]) dayElement.classList.add("has-event");
         }
     });
 }
@@ -184,63 +210,114 @@ function selectDate(dateStr, day) {
 
 function updateEventDetails(dateStr, day) {
     const event = events[dateStr];
-    const eventDetails = document.getElementById('eventDetails');
+    const eventDetails = document.querySelector(".event-details");
 
     // Preenche detalhes do evento ou mostra informações padrão
-    document.getElementById('eventDay').textContent = day;
-    document.getElementById('eventMonth').textContent = currentDate.toLocaleDateString('pt-BR', { month: 'short' }).toUpperCase().slice(0, 3);
+    document.querySelector(".date-day").textContent = day;
+    document.querySelector(".date-month").textContent = today.toLocaleDateString("pt-BR", { month: "short" }).toUpperCase().slice(0, 3);
+
+    let weekElement = document.querySelector(".date-week");
+
+    switch (new Date(dateStr).getDay()) {
+        case 0:
+            weekElement.textContent = "DOM";
+            break;
+        case 1:
+            weekElement.textContent = "SEG";
+            break;
+        case 2:
+            weekElement.textContent = "TER";
+            break;
+        case 3:
+            weekElement.textContent = "QUA";
+            break;
+        case 4:
+            weekElement.textContent = "QUI";
+            break;
+        case 5:
+            weekElement.textContent = "SEX";
+            break;
+        case 6:
+            weekElement.textContent = "SAB";
+            break;
+    }
 
     if (event) {
-        document.getElementById('eventTitle').textContent = event.title;
-        document.getElementById('eventSubtitle').textContent = event.subtitle;
+        document.querySelector(".event-title").textContent = event.title;
+        document.querySelector(".date-hour").textContent = event.hour;
 
-        const actionBtns = eventDetails.querySelectorAll('.action-btn');
-        actionBtns[0].textContent = `👍 ${event.likes}`;
-        actionBtns[1].textContent = `📝 ${event.comments}`;
+        let eventDate = Date(dateStr).setHours(0, 0, 0, 0);
+        let diffText;
+
+        () => {
+            const diffTime = eventDate - today.setHours(0, 0, 0, 0);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+            if ((diffDays / 7) >= 1 || (diffDays / 7) < 2) {
+                diffText = `Daqui a 1 semana`;
+            }
+            else if ((diffDays / 7) >= 1 || (diffDays / 7) < 2) {
+                diffText = `Daqui a ${Math.floor(diffDays / 7)} semanas`;
+            }
+            else if (diffDays == 0) {
+                diffText = "Hoje";
+            }
+            else if (diffDays == 1) {
+                diffText = "Amanhã";
+            }
+            else if (diffDays > 1 && diffDays < 7) {
+                diffText = `Daqui a ${diffDays} dias`;
+            }
+            document.querySelector(".event-subtitle").textContent = diffText;
+        }
+
+        document.querySelector(".presence-info").textContent = event.presence;
+        document.querySelector(".song-number").textContent = event.numberOfSongs;
+
     } else {
-        document.getElementById('eventTitle').textContent = 'Sem eventos';
-        document.getElementById('eventSubtitle').textContent = '-';
+        document.querySelector(".event-title").textContent = "Sem eventos";
+        document.querySelector(".event-subtitle").textContent = "-";
+        document.querySelector(".date-hour").textContent = "-";
+        document.querySelector(".presence-info").textContent = "-";
+        document.querySelector(".song-number").textContent = "-";
 
-        const actionBtns = eventDetails.querySelectorAll('.action-btn');
-        actionBtns[0].textContent = '👍 -';
-        actionBtns[1].textContent = '📝 -';
     }
 }
 
 function changeMonth(direction) {
-    currentDate.setMonth(currentDate.getMonth() + direction);
+    today.setMonth(today.getMonth() + direction);
 
     // Limpa a seleção visual ao navegar entre meses
     selectedDate = null;
 
-    generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+    generateCalendar(today.getFullYear(), today.getMonth());
 }
 
 function openYearModal() {
-    selectedYear = currentDate.getFullYear();
+    selectedYear = today.getFullYear();
     generateYearGrid();
-    document.getElementById('yearModal').classList.add('active');
+    document.getElementById("yearModal").classList.add("active");
 }
 
 function closeYearModal() {
-    document.getElementById('yearModal').classList.remove('active');
+    document.getElementById("yearModal").classList.remove("active");
     selectedYear = null;
 }
 
 function generateYearGrid() {
-    const yearGrid = document.getElementById('yearGrid');
+    const yearGrid = document.getElementById("yearGrid");
     const startYear = new Date().getFullYear() - 5;
     const endYear = new Date().getFullYear() + 6;
 
-    yearGrid.innerHTML = '';
+    yearGrid.innerHTML = "";
 
     for (let year = endYear; year >= startYear; year--) {
-        const yearElement = document.createElement('div');
-        yearElement.classList.add('year-item');
+        const yearElement = document.createElement("div");
+        yearElement.classList.add("year-item");
         yearElement.textContent = year;
         yearElement.dataset.year = year;
 
-        yearElement.addEventListener('click', () => selectYear(year));
+        yearElement.addEventListener("click", () => selectYear(year));
         yearGrid.appendChild(yearElement);
     }
     updateAllYearClasses();
@@ -253,54 +330,56 @@ function selectYear(year) {
 
 function updateAllYearClasses() {
     const currentYear = new Date().getFullYear();
-    const yearElements = document.querySelectorAll('.year-item[data-year]');
+    const yearElements = document.querySelectorAll(".year-item[data-year]");
 
-    yearElements.forEach(yearElement => {
+    yearElements.forEach((yearElement) => {
         const year = parseInt(yearElement.dataset.year);
 
-        yearElement.classList.remove('current', 'selected');
+        yearElement.classList.remove("current", "selected");
 
         if (year === currentYear) {
-            yearElement.classList.add('current');
+            yearElement.classList.add("current");
         }
 
         if (year === selectedYear) {
-            yearElement.classList.add('selected');
+            yearElement.classList.add("selected");
         }
     });
 }
 
 function confirmYearSelection() {
     if (selectedYear !== null) {
-        currentDate.setFullYear(selectedYear);
+        today.setFullYear(selectedYear);
         selectedDate = null;
 
-        generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+        generateCalendar(today.getFullYear(), today.getMonth());
     }
     closeYearModal();
 }
 
 // Initialize calendar
-generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+generateCalendar(today.getFullYear(), today.getMonth());
 
 // Navigation items
-document.querySelectorAll('.nav-item').forEach(item => {
-    item.addEventListener('click', function () {
-        document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
-        this.classList.add('active');
+document.querySelectorAll(".nav-item").forEach((item) => {
+    item.addEventListener("click", function () {
+        document
+            .querySelectorAll(".nav-item")
+            .forEach((nav) => nav.classList.remove("active"));
+        this.classList.add("active");
     });
 });
 
 // Close modal when clicking outside
-document.getElementById('yearModal').addEventListener('click', function (e) {
+document.getElementById("yearModal").addEventListener("click", function (e) {
     if (e.target === this) {
         closeYearModal();
     }
 });
 
 // Close modal with Escape key
-document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') {
+document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
         closeYearModal();
     }
 });
