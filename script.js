@@ -1,4 +1,4 @@
-let today = new Date();
+let today = new Date(new Date().toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }));
 let selectedDate = null;
 let selectedYear = null;
 let isFirstInit = true;
@@ -34,6 +34,27 @@ const events = {
     },
     "2025-08-28": {
         title: "Vigília",
+        description: "Chegar as 21h para organizar o local",
+        hour: "22h30",
+        presence: "4/8",
+        numberOfSongs: "8",
+    },
+    "2025-10-31": {
+        title: "Aniversario do alysson",
+        description: "Chegar as 21h para organizar o local",
+        hour: "22h30",
+        presence: "4/8",
+        numberOfSongs: "8",
+    },
+    "2025-09-01": {
+        title: "Culto",
+        description: "Chegar as 21h para organizar o local",
+        hour: "22h30",
+        presence: "4/8",
+        numberOfSongs: "8",
+    },
+    "2025-09-15": {
+        title: "noite de talentos",
         description: "Chegar as 21h para organizar o local",
         hour: "22h30",
         presence: "4/8",
@@ -161,13 +182,12 @@ function generateCalendar(year, month) {
     updateAllDayClasses();
 
     // Seleciona o dia atual automaticamente
-    if (
-        isFirstInit &&
+    if (isFirstInit &&
         year === today.getFullYear() &&
-        month === today.getMonth()
-    ) {
-        selectedDate = today.toISOString().slice(0, 10);
-        selectDate(selectedDate, today.getDate());
+        month === today.getMonth()) {
+        const todayDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+        selectedDate = todayDate;
+        selectDate(todayDate, today.getDate());
         isFirstInit = false;
     }
 }
@@ -217,59 +237,38 @@ function updateEventDetails(dateStr, day) {
     document.querySelector(".date-month").textContent = today.toLocaleDateString("pt-BR", { month: "short" }).toUpperCase().slice(0, 3);
 
     let weekElement = document.querySelector(".date-week");
-
-    switch (new Date(dateStr).getDay()) {
-        case 0:
-            weekElement.textContent = "DOM";
-            break;
-        case 1:
-            weekElement.textContent = "SEG";
-            break;
-        case 2:
-            weekElement.textContent = "TER";
-            break;
-        case 3:
-            weekElement.textContent = "QUA";
-            break;
-        case 4:
-            weekElement.textContent = "QUI";
-            break;
-        case 5:
-            weekElement.textContent = "SEX";
-            break;
-        case 6:
-            weekElement.textContent = "SAB";
-            break;
-    }
+    const weekDays = ["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SAB"];
+    let weekDay = new Date(dateStr).getDay();
+    weekElement.textContent = weekDays[weekDay];
+    console.log("Dia da semana: ", weekDay);
+    console.log("Data selecionada: ", dateStr);
 
     if (event) {
         document.querySelector(".event-title").textContent = event.title;
         document.querySelector(".date-hour").textContent = event.hour;
 
-        let eventDate = Date(dateStr).setHours(0, 0, 0, 0);
+        let eventDate = new Date(dateStr).setHours(0, 0, 0, 0);
         let diffText;
 
-        () => {
-            const diffTime = eventDate - today.setHours(0, 0, 0, 0);
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        const diffTime = eventDate - today.setHours(0, 0, 0, 0);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-            if ((diffDays / 7) >= 1 || (diffDays / 7) < 2) {
-                diffText = `Daqui a 1 semana`;
-            }
-            else if ((diffDays / 7) >= 1 || (diffDays / 7) < 2) {
-                diffText = `Daqui a ${Math.floor(diffDays / 7)} semanas`;
-            }
-            else if (diffDays == 0) {
-                diffText = "Hoje";
-            }
-            else if (diffDays == 1) {
-                diffText = "Amanhã";
-            }
-            else if (diffDays > 1 && diffDays < 7) {
-                diffText = `Daqui a ${diffDays} dias`;
-            }
-            document.querySelector(".event-subtitle").textContent = diffText;
+        if ((diffDays / 7) >= 1 || (diffDays / 7) < 2) {
+            diffText = `Daqui a 1 semana`;
         }
+        else if ((diffDays / 7) >= 1 || (diffDays / 7) < 2) {
+            diffText = `Daqui a ${Math.floor(diffDays / 7)} semanas`;
+        }
+        else if (diffDays == 0) {
+            diffText = "Hoje";
+        }
+        else if (diffDays == 1) {
+            diffText = "Amanhã";
+        }
+        else if (diffDays > 1 && diffDays < 7) {
+            diffText = `Daqui a ${diffDays} dias`;
+        }
+        document.querySelector(".event-subtitle").textContent = diffText;
 
         document.querySelector(".presence-info").textContent = event.presence;
         document.querySelector(".song-number").textContent = event.numberOfSongs;
@@ -280,7 +279,6 @@ function updateEventDetails(dateStr, day) {
         document.querySelector(".date-hour").textContent = "-";
         document.querySelector(".presence-info").textContent = "-";
         document.querySelector(".song-number").textContent = "-";
-
     }
 }
 
