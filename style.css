@@ -335,44 +335,6 @@ button {
     display: flex;
 }
 
-/* .event-date {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
-} */
-
-/* .date-box {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 1.2rem;
-    padding: 1.2rem;
-    text-align: center;
-    min-width: 6rem;
-} */
-
-/* .date-day {
-    font-size: 2.4rem;
-    font-weight: bold;
-    line-height: 1;
-} */
-
-/* .date-month {
-    font-size: 1.2rem;
-    opacity: 0.9;
-    text-transform: uppercase;
-} */
-
-/* .event-info h3 {
-    font-size: 1.8rem;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-} */
-
-/* .event-subtitle {
-    opacity: 0.8;
-    font-size: 1.4rem;
-} */
-
 .event-details {
     background-color: var(--white);
     border-radius: 15px;
