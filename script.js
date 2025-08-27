@@ -485,7 +485,8 @@ function changeMonth(direction, selectDate) {
 
     generateCalendar(today.getFullYear(), today.getMonth());
 
-    if (selectDate) selectDate();
+    // MUDEI AQUI, ANTES ERA if (selectDate) selectDate();
+    selectDate();
 }
 
 function openYearModal() {
@@ -554,16 +555,6 @@ function confirmYearSelection() {
 
 // Initialize calendar
 generateCalendar(today.getFullYear(), today.getMonth());
-
-// Navigation items
-document.querySelectorAll(".nav-item").forEach((item) => {
-    item.addEventListener("click", function () {
-        document
-            .querySelectorAll(".nav-item")
-            .forEach((nav) => nav.classList.remove("active"));
-        this.classList.add("active");
-    });
-});
 
 // Close modal when clicking outside
 document.getElementById("yearModal").addEventListener("click", function (e) {
