@@ -1,4 +1,11 @@
-let today = new Date(new Date().toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }));
+let today = new Date();
+
+// const offset = -3; // UTC-3 (horário de Brasília)
+// today.setHours(today.getHours() + offset);
+
+console.log(today);
+console.log(today.getFullYear());
+
 let selectedDate = null;
 let selectedYear = null;
 let isFirstInit = true;
@@ -12,7 +19,7 @@ const events = {
         numberOfSongs: "4",
     },
     "2025-08-16": {
-        title: "Louvor&ão",
+        title: "Louvorzão",
         hour: "19h",
         description: "",
         presence: "5/9",
@@ -95,6 +102,9 @@ function generateCalendar(year, month) {
     });
 
     const firstDay = new Date(year, month, 1);
+
+    console.log(firstDay);
+
     const lastDay = new Date(year, month + 1, 0);
     const startingDayOfWeek = firstDay.getDay();
     const daysInMonth = lastDay.getDate();
@@ -102,7 +112,8 @@ function generateCalendar(year, month) {
     // Calcular dias do mês anterior
     const prevMonth = month === 0 ? 11 : month - 1;
     const prevYear = month === 0 ? year - 1 : year;
-    const daysInPrevMonth = new Date(prevYear, prevMonth + 1, 0).getDate();
+    const prevMonthDate = new Date(prevYear, prevMonth + 1, 0);
+    const daysInPrevMonth = prevMonthDate.getDate();
 
     // Calcular dias do próximo mês
     const nextMonth = month === 11 ? 0 : month + 1;
@@ -122,19 +133,16 @@ function generateCalendar(year, month) {
         let isCurrentMonth = true;
 
         if (i < startingDayOfWeek) {
+
             // Dias do mês anterior
             dayNumber = daysInPrevMonth - (startingDayOfWeek - 1 - i);
-            dateStr = `${prevYear}-${String(prevMonth + 1).padStart(2, "0")}-${String(
-                dayNumber
-            ).padStart(2, "0")}`;
+            dateStr = `${prevYear}-${String(prevMonth + 1).padStart(2, "0")}-${String(dayNumber).padStart(2, "0")}`;
             isCurrentMonth = false;
             dayElement.classList.add("other-month");
         } else if (dayCounter <= daysInMonth) {
             // Dias do mês atual
             dayNumber = dayCounter;
-            dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(
-                dayNumber
-            ).padStart(2, "0")}`;
+            dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(dayNumber).padStart(2, "0")}`;
             dayCounter++;
         } else {
             // Dias do próximo mês
@@ -174,26 +182,24 @@ function generateCalendar(year, month) {
                 }
             });
         }
-
         calendar.appendChild(dayElement);
     }
-
-    // Atualiza classes de dias
     updateAllDayClasses();
 
     // Seleciona o dia atual automaticamente
     if (isFirstInit &&
         year === today.getFullYear() &&
         month === today.getMonth()) {
-        const todayDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
-        selectedDate = todayDate;
-        selectDate(todayDate, today.getDate());
+        const todayStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+        selectedDate = todayStr;
+        selectDate(todayStr, today.getDate());
         isFirstInit = false;
     }
 }
 
 function updateAllDayClasses() {
-    const todayStr = new Date().toISOString().slice(0, 10);
+    const now = new Date();
+    const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
     const dayElements = document.querySelectorAll(".day[data-date]");
 
     dayElements.forEach((dayElement) => {
@@ -230,24 +236,29 @@ function selectDate(dateStr, day) {
 
 function updateEventDetails(dateStr, day) {
     const event = events[dateStr];
-    const eventDetails = document.querySelector(".event-details");
 
     // Preenche detalhes do evento ou mostra informações padrão
     document.querySelector(".date-day").textContent = day;
+
+    // PERGUNTA PRO CHAT COMO ISSO FAZ SENTIDO
     document.querySelector(".date-month").textContent = today.toLocaleDateString("pt-BR", { month: "short" }).toUpperCase().slice(0, 3);
 
     let weekElement = document.querySelector(".date-week");
-    const weekDays = ["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SAB"];
-    let weekDay = new Date(dateStr).getDay();
-    weekElement.textContent = weekDays[weekDay];
-    console.log("Dia da semana: ", weekDay);
-    console.log("Data selecionada: ", dateStr);
+    const daysOfWeek = ["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SAB"];
+    const dateObj = new Date(dateStr + "T00:00:00");
+
+    console.log(dateStr);
+    console.log(dateObj);
+
+    let weekDay = dateObj.getDay();
+    weekElement.textContent = daysOfWeek[weekDay];
 
     if (event) {
         document.querySelector(".event-title").textContent = event.title;
         document.querySelector(".date-hour").textContent = event.hour;
 
-        let eventDate = new Date(dateStr).setHours(0, 0, 0, 0);
+        let eventDate = new Date(dateStr);
+        eventDate = eventDate.getTime();
         let diffText;
 
         const diffTime = eventDate - today.setHours(0, 0, 0, 0);
