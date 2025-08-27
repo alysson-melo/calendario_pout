@@ -295,7 +295,6 @@ function generateCalendar(year, month) {
         let isCurrentMonth = true;
 
         if (i < startingDayOfWeek) {
-
             // Dias do mês anterior
             dayNumber = daysInPrevMonth - (startingDayOfWeek - 1 - i);
             dateStr = `${prevYear}-${String(prevMonth + 1).padStart(2, "0")}-${String(dayNumber).padStart(2, "0")}`;
@@ -354,8 +353,7 @@ function generateCalendar(year, month) {
 }
 
 function updateAllDayClasses() {
-    const now = new Date();
-    const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
     const dayElements = document.querySelectorAll(".day[data-date]");
 
     dayElements.forEach((dayElement) => {
@@ -371,10 +369,11 @@ function updateAllDayClasses() {
                 dayElement.classList.add("today");
                 dayElement.classList.add("selected");
             }
-
             if (selectedDate && selectedDate === dateStr)
                 dayElement.classList.add("selected");
-            if (events[dateStr]) dayElement.classList.add("has-event");
+            if (events[dateStr]) {
+                dayElement.classList.add("has-event");
+            }
         } else {
             // Para dias de outros meses, apenas verifica se tem eventos
             if (events[dateStr]) dayElement.classList.add("has-event");
@@ -392,25 +391,23 @@ function selectDate(dateStr, day) {
 
 function updateEventDetails(dateStr, day) {
     const event = events[dateStr];
+    const dateObj = new Date(dateStr + "T00:00:00");
 
     // Preenche detalhes do evento ou mostra informações padrão
     document.querySelector(".date-day").textContent = day.toString().padStart(2, '0');
-
-    // PERGUNTA PRO CHAT COMO ISSO FAZ SENTIDO
-    document.querySelector(".date-month").textContent = today.toLocaleDateString("pt-BR", { month: "short" }).toUpperCase().slice(0, 3);
+    document.querySelector(".date-month").textContent = dateObj.toLocaleDateString("pt-BR", { month: "short" }).toUpperCase().slice(0, 3);
 
     let weekElement = document.querySelector(".date-week");
     const daysOfWeek = ["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SAB"];
-    const dateObj = new Date(dateStr + "T00:00:00");
 
     console.log(`DataStr do evento selecionado: ${dateStr}`);
     console.log(`DateObj do evento seleconado: ${dateObj}`);
 
-    let weekDay = dateObj.getDay();
+    let EventDayOfWeek = dateObj.getDay();
 
-    console.log(`Dia da semana do evento selecionado: ${weekDay}`);
+    console.log(`Dia da semana do evento selecionado: ${EventDayOfWeek}`);
 
-    weekElement.textContent = daysOfWeek[weekDay];
+    weekElement.textContent = daysOfWeek[EventDayOfWeek];
 
     if (event) {
         document.querySelector(".event-title").textContent = event.title;
@@ -467,11 +464,11 @@ function updateEventDetails(dateStr, day) {
         else if (diffDays > 60) {
             diffText = `Daqui a ${Math.floor(diffDays / 30)} meses`
         }
-
         document.querySelector(".event-subtitle").textContent = diffText;
         document.querySelector(".presence-info").textContent = event.presence;
         document.querySelector(".song-number").textContent = event.numberOfSongs;
-    } else {
+    }
+    else {
         document.querySelector(".event-title").textContent = "Sem eventos";
         document.querySelector(".event-subtitle").textContent = "-";
         document.querySelector(".date-hour").textContent = "-";
@@ -487,7 +484,7 @@ function changeMonth(direction, selectDate) {
     selectedDate = null;
 
     generateCalendar(today.getFullYear(), today.getMonth());
-    
+
     if (selectDate) selectDate();
 }
 
