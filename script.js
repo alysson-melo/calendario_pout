@@ -331,16 +331,10 @@ function generateCalendar(year, month) {
             dayElement.addEventListener("click", () => {
                 if (i < startingDayOfWeek) {
                     // Clicou em dia do mês anterior
-                    changeMonth(-1);
-                    setTimeout(() => {
-                        selectDate(dateStr, dayNumber);
-                    }, 50);
+                    changeMonth(-1, () => { selectDate(dateStr, dayNumber) });
                 } else {
                     // Clicou em dia do próximo mês
-                    changeMonth(1);
-                    setTimeout(() => {
-                        selectDate(dateStr, dayNumber);
-                    }, 50);
+                    changeMonth(1, () => { selectDate(dateStr, dayNumber) });
                 }
             });
         }
@@ -486,13 +480,15 @@ function updateEventDetails(dateStr, day) {
     }
 }
 
-function changeMonth(direction) {
+function changeMonth(direction, selectDate) {
     today.setMonth(today.getMonth() + direction);
 
     // Limpa a seleção visual ao navegar entre meses
     selectedDate = null;
 
     generateCalendar(today.getFullYear(), today.getMonth());
+    
+    if (selectDate) selectDate();
 }
 
 function openYearModal() {
