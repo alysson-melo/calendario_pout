@@ -346,14 +346,15 @@ function generateCalendar(year, month) {
         year === today.getFullYear() &&
         month === today.getMonth()) {
         const todayStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
-        selectedDate = todayStr;
-        selectDate(todayStr, today.getDate());
+        selectDate(todayStr, today.getDate(), isFirstInit);
         isFirstInit = false;
     }
 }
 
 function updateAllDayClasses() {
-    const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+    let now = new Date();
+    now.setHours(0, 0, 0, 0);
+    const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
     const dayElements = document.querySelectorAll(".day[data-date]");
 
     dayElements.forEach((dayElement) => {
@@ -367,7 +368,6 @@ function updateAllDayClasses() {
         if (isCurrentMonth) {
             if (todayStr === dateStr) {
                 dayElement.classList.add("today");
-                dayElement.classList.add("selected");
             }
             if (selectedDate && selectedDate === dateStr)
                 dayElement.classList.add("selected");
@@ -381,8 +381,10 @@ function updateAllDayClasses() {
     });
 }
 
-function selectDate(dateStr, day) {
-    selectedDate = dateStr;
+function selectDate(dateStr, day, isFirstInit) {
+    if (!isFirstInit) {
+        selectedDate = dateStr;
+    }
 
     // Atualiza classes e detalhes do evento
     updateAllDayClasses();

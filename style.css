@@ -266,7 +266,6 @@ button {
     margin: 0.2rem;
 }
 
-.day.today,
 .day:hover {
     background: var(--secondary-400);
 }
@@ -280,7 +279,8 @@ button {
     background: var(--primary-400);
 }
 
-.day.selected {
+.day.selected,
+.day.today {
     background: var(--secondary-400) !important;
     color: var(--primary-600);
 }
