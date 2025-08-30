@@ -431,7 +431,7 @@ function updateEventDetails(dateStr, day) {
             diffText = "Ontem";
         }
         else if (diffDays < -1 && diffDays > -7) {
-            diffText = `Há ${diffDays} dias`;
+            diffText = `Há ${diffDays * -1} dias`;
         }
         else if ((diffDays <= -7 && diffDays > -14)) {
             diffText = `Há 1 semana`;
