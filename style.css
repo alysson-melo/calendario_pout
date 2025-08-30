@@ -54,7 +54,7 @@ body {
 .container {
     width: 100%;
     /* verificar o tamanho que isso deve ter no futuro para responsividade */
-    max-width: 60rem;
+    max-width: 50rem;
     margin: 0 auto;
     backdrop-filter: blur(2rem);
     border-radius: 2.5rem;
