@@ -333,7 +333,7 @@ button {
     flex: 1;
 }
 
-.card-date {
+.card-aside {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -345,8 +345,8 @@ button {
     gap: 0.2rem;
 }
 
-.card-date-day,
-.card-date-month {
+.card-aside-day,
+.card-aside-month {
     color: var(--white);
     text-align: center;
     font-size: 1.6rem;
@@ -354,8 +354,8 @@ button {
     line-height: 100.028%;
 }
 
-.card-date-week,
-.card-date-hour {
+.card-aside-week,
+.card-aside-hour {
     color: var(--white);
     font-family: "Pontano Sans";
     font-size: 1rem;

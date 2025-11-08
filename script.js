@@ -396,10 +396,10 @@ function updateEventDetails(dateStr, day) {
     const dateObj = new Date(dateStr + "T00:00:00");
 
     // Preenche detalhes do evento ou mostra informações padrão
-    document.querySelector(".card-date-day").textContent = day.toString().padStart(2, '0');
-    document.querySelector(".card-date-month").textContent = dateObj.toLocaleDateString("pt-BR", { month: "short" }).toUpperCase().slice(0, 3);
+    document.querySelector(".card-aside-day").textContent = day.toString().padStart(2, '0');
+    document.querySelector(".card-aside-month").textContent = dateObj.toLocaleDateString("pt-BR", { month: "short" }).toUpperCase().slice(0, 3);
 
-    let weekElement = document.querySelector(".card-date-week");
+    let weekElement = document.querySelector(".card-aside-week");
     const daysOfWeek = ["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SAB"];
 
     console.log(`DataStr do evento selecionado: ${dateStr}`);
@@ -413,7 +413,7 @@ function updateEventDetails(dateStr, day) {
 
     if (event) {
         document.querySelector(".card-title").textContent = event.title;
-        document.querySelector(".card-date-hour").textContent = event.hour;
+        document.querySelector(".card-aside-hour").textContent = event.hour;
 
         let eventDate = new Date(dateStr + "T00:00:00");
         let todayZero = new Date();
@@ -473,7 +473,7 @@ function updateEventDetails(dateStr, day) {
     else {
         document.querySelector(".card-title").textContent = "Sem eventos";
         document.querySelector(".card-subtittle").textContent = "-";
-        document.querySelector(".card-date-hour").textContent = "-";
+        document.querySelector(".card-aside-hour").textContent = "-";
         document.querySelector(".card-presence-info").textContent = "-";
         document.querySelector(".card-song-number").textContent = "-";
     }
