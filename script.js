@@ -396,10 +396,10 @@ function updateEventDetails(dateStr, day) {
     const dateObj = new Date(dateStr + "T00:00:00");
 
     // Preenche detalhes do evento ou mostra informações padrão
-    document.querySelector(".date-day").textContent = day.toString().padStart(2, '0');
-    document.querySelector(".date-month").textContent = dateObj.toLocaleDateString("pt-BR", { month: "short" }).toUpperCase().slice(0, 3);
+    document.querySelector(".card-date-day").textContent = day.toString().padStart(2, '0');
+    document.querySelector(".card-date-month").textContent = dateObj.toLocaleDateString("pt-BR", { month: "short" }).toUpperCase().slice(0, 3);
 
-    let weekElement = document.querySelector(".date-week");
+    let weekElement = document.querySelector(".card-date-week");
     const daysOfWeek = ["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SAB"];
 
     console.log(`DataStr do evento selecionado: ${dateStr}`);
@@ -412,8 +412,8 @@ function updateEventDetails(dateStr, day) {
     weekElement.textContent = daysOfWeek[EventDayOfWeek];
 
     if (event) {
-        document.querySelector(".event-title").textContent = event.title;
-        document.querySelector(".date-hour").textContent = event.hour;
+        document.querySelector(".card-title").textContent = event.title;
+        document.querySelector(".card-date-hour").textContent = event.hour;
 
         let eventDate = new Date(dateStr + "T00:00:00");
         let todayZero = new Date();
@@ -466,16 +466,16 @@ function updateEventDetails(dateStr, day) {
         else if (diffDays > 60) {
             diffText = `Daqui a ${Math.floor(diffDays / 30)} meses`
         }
-        document.querySelector(".event-subtitle").textContent = diffText;
-        document.querySelector(".presence-info").textContent = event.presence;
-        document.querySelector(".song-number").textContent = event.numberOfSongs;
+        document.querySelector(".card-subtittle").textContent = diffText;
+        document.querySelector(".card-presence-info").textContent = event.presence;
+        document.querySelector(".card-song-number").textContent = event.numberOfSongs;
     }
     else {
-        document.querySelector(".event-title").textContent = "Sem eventos";
-        document.querySelector(".event-subtitle").textContent = "-";
-        document.querySelector(".date-hour").textContent = "-";
-        document.querySelector(".presence-info").textContent = "-";
-        document.querySelector(".song-number").textContent = "-";
+        document.querySelector(".card-title").textContent = "Sem eventos";
+        document.querySelector(".card-subtittle").textContent = "-";
+        document.querySelector(".card-date-hour").textContent = "-";
+        document.querySelector(".card-presence-info").textContent = "-";
+        document.querySelector(".card-song-number").textContent = "-";
     }
 }
 
