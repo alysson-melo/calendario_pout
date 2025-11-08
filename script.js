@@ -412,7 +412,7 @@ function updateEventDetails(dateStr, day) {
     weekElement.textContent = daysOfWeek[EventDayOfWeek];
 
     if (event) {
-        document.querySelector(".card-title").textContent = event.title;
+        document.querySelector(".card-content-title").textContent = event.title;
         document.querySelector(".card-aside-hour").textContent = event.hour;
 
         let eventDate = new Date(dateStr + "T00:00:00");
@@ -466,16 +466,16 @@ function updateEventDetails(dateStr, day) {
         else if (diffDays > 60) {
             diffText = `Daqui a ${Math.floor(diffDays / 30)} meses`
         }
-        document.querySelector(".card-subtittle").textContent = diffText;
-        document.querySelector(".card-presence-info").textContent = event.presence;
-        document.querySelector(".card-song-number").textContent = event.numberOfSongs;
+        document.querySelector(".card-content-subtittle").textContent = diffText;
+        document.querySelector(".card-content-presence-info").textContent = event.presence;
+        document.querySelector(".card-content-songs-number").textContent = event.numberOfSongs;
     }
     else {
-        document.querySelector(".card-title").textContent = "Sem eventos";
-        document.querySelector(".card-subtittle").textContent = "-";
+        document.querySelector(".card-content-title").textContent = "Sem eventos";
+        document.querySelector(".card-content-subtittle").textContent = "-";
         document.querySelector(".card-aside-hour").textContent = "-";
-        document.querySelector(".card-presence-info").textContent = "-";
-        document.querySelector(".card-song-number").textContent = "-";
+        document.querySelector(".card-content-presence-info").textContent = "-";
+        document.querySelector(".card-content-songs-number").textContent = "-";
     }
 }
 
